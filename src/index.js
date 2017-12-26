@@ -11,6 +11,13 @@ function splitAny(any) {
         case 'function': {
             return splitFunction(any);
         }
+        case 'object': {
+            if (Array.isArray(any)) {
+                return splitArray(any);
+            } else {
+                return splitMap(any);
+            }
+        }
         default: {
             throw new TypeError('Unexpected type');
         }
@@ -36,4 +43,15 @@ function splitNumber(num) {
 
 function splitFunction(fn) {
     return splitAny(fn());
+}
+
+function splitMap(any) {
+    return Object.keys(any).map(key => [
+        key,
+        any[key]
+    ]);
+}
+
+function splitArray(any) {
+    return any.map(arrayElement => splitAny(arrayElement));
 }
