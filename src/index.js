@@ -3,6 +3,9 @@ module.exports = function splitAny(any) {
         case 'string': {
             return splitString(any);
         }
+        case 'number': {
+            return splitNumber(any);
+        }
         default: {
             throw new TypeError('Unexpected type');
         }
@@ -16,4 +19,12 @@ function splitString(str, delim = ' ') {
     } else {
         return str.split('');
     }
+}
+
+function splitNumber(num) {
+    const isNegative = num < 0;
+    return [
+        ...(isNegative ? '-' : ''),
+        ...String(num).split(''),
+    ];
 }
