@@ -25,8 +25,4 @@ describe('splitAny', function() {
     it('splits each value in an array', function() {
         assert.deepEqual(splitAny([10, { test: 'test' }, function() {return 'hello';}]), [[1, 0], [['test', 'test']], ['h', 'e', 'l', 'l', 'o']]);
     });
-
-    it('fail on false', function() {
-        assert.throws(splitAny(false), TypeError);
-    });
 });
