@@ -14,6 +14,10 @@ describe('splitAny', function() {
         assert.deepEqual(splitAny(891), [8, 9, 1]);
     });
 
+    it('splits numbers', function() {
+        assert.deepEqual(splitAny(-891), ['-', 8, 9, 1]);
+    });
+
     it('splits the return value of a callback', function() {
         assert.deepEqual(splitAny(function() { return 123; }), [1, 2, 3]);
     });
@@ -24,5 +28,12 @@ describe('splitAny', function() {
 
     it('splits each value in an array', function() {
         assert.deepEqual(splitAny([10, { test: 'test' }, function() {return 'hello';}]), [[1, 0], [['test', 'test']], ['h', 'e', 'l', 'l', 'o']]);
+    });
+
+    it('throws an Error when false param is passed', function() {
+        assert.throws(
+            function() { splitAny(false); },
+            TypeError
+        );
     });
 });
