@@ -1,4 +1,6 @@
-module.exports = function splitAny(any) {
+module.exports = splitAny;
+
+function splitAny(any) {
     switch (typeof any) {
         case 'string': {
             return splitString(any);
@@ -6,16 +8,19 @@ module.exports = function splitAny(any) {
         case 'number': {
             return splitNumber(any);
         }
+        case 'function': {
+            return splitFunction(any);
+        }
         default: {
             throw new TypeError('Unexpected type');
         }
     }
-};
+}
 
 function splitString(str, delim = ' ') {
     const subStrings = str.split(delim);
     if (subStrings.length > 1) {
-        return subStrings.map(subString => splitString(subString))
+        return subStrings.map(subString => splitString(subString));
     } else {
         return str.split('');
     }
@@ -27,4 +32,8 @@ function splitNumber(num) {
         ...(isNegative ? '-' : ''),
         ...String(num).split(''),
     ];
+}
+
+function splitFunction(fn) {
+    return splitAny(fn());
 }
